@@ -38,6 +38,18 @@ end
     stripe_secret_key: "sk_test_abcdefg12345678"
   ```
 
+## Testing
+
+To configure a different API endpoint URL to mock HTTP request, you could customize default scheme and host:
+
+```elixir
+# config/test.exs
+config :exstripe,
+  endpoint_scheme: "http",
+  endpoint_host: "localhost",
+  endpoint_port: "9823"
+```
+
 ### Features
 
 #### Simple CRUD

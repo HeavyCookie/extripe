@@ -2,14 +2,27 @@ defmodule Extripe.Utils.API do
   use HTTPoison.Base
 
   defp process_url(url) do
+    host_and_port = [
+      Application.get_env(:extripe, :endpoint_host, "api.stripe.com"),
+      Application.get_env(:extripe, :endpoint_port),
+    ]
+      |> Enum.filter(fn(el) -> el != nil end)
+      |> Enum.join(":")
+
     [
-      "https://",
+      Application.get_env(
+        :extripe,
+        :endpoint_scheme,
+        System.get_env("stripe_endpoint_scheme") || "https://"
+      ),
       Application.get_env(
         :extripe,
         :stripe_secret_key,
         System.get_env("stripe_secret_key")
       ),
-     ":@api.stripe.com/v1",
+     ":@",
+     host_and_port,
+     "/v1",
      url
    ]
   end
